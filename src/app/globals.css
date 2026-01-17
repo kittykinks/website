@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+    --color-background: var(--color-pink-50);
+    --color-foreground: var(--color-pink-950);
+}
+
+@theme inline {
+    --color-background: var(--color-background);
+    --color-foreground: var(--color-foreground);
+    --font-nunito: var(--font-nunito);
+    --font-cherry: var(--font-cherry);
+}
+
+/* @media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: var(--color-neutral-950);
+        --color-foreground: var(--color-pink-200);
+    }
+} */
+
+body {
+    @apply font-nunito bg-background text-foreground;
+}
