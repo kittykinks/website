@@ -94,7 +94,7 @@ function Banner() {
             }}
         >
             {!bannerUrl && (
-                <div className="w-full h-full font-cherry leading-8 tracking-[0.25rem] rotate-258 -ml-40 scale-150 opacity-10 select-none">
+                <div className="w-full h-full font-cherry leading-5 tracking-[0.5rem] rotate-258 -ml-40 scale-150 opacity-10 select-none">
                     {"K ".repeat(300)}
                 </div>
             )}
