@@ -235,7 +235,7 @@ function DashboardContent() {
                 </div>
                 <div
                     className={cn(
-                        "relative md:w-screen md:max-w-sm flex flex-col flex-1",
+                        "relative md:w-screen md:max-w-sm flex flex-col flex-1 max-w-full",
                         tab === "preview" ? "" : "hidden md:block",
                     )}
                 >
@@ -256,8 +256,8 @@ function DashboardContent() {
 
 function Layout({ children }: { children?: ReactNode }) {
     return (
-        <div className="py-16 px-4 flex flex-col items-center min-h-screen relative">
-            <div className="flex flex-col md:grid md:grid-cols-2 md:gap-16 relative flex-1">
+        <div className="py-16 px-8 flex flex-col items-center min-h-screen relative max-w-screen">
+            <div className="flex flex-col md:grid md:grid-cols-2 md:gap-16 relative flex-1 max-w-full">
                 {children}
             </div>
         </div>
@@ -964,7 +964,7 @@ function ChangeSaver() {
     return (
         <div
             className={cn(
-                "col-span-2 py-4 md:h-12 px-4 md:-mx-4 mt-16 md:mt-0 bg-white rounded-xl border border-pink-200",
+                "col-span-2 py-4 md:h-12 px-4 -mx-4 mt-16 md:mt-0 bg-white rounded-xl border border-pink-200",
                 "shadow shadow-pink-200 sticky bottom-20 md:bottom-8 flex flex-col md:flex-row items-stretch md:items-center",
                 "justify-between gap-4 transition-all",
                 !isChanged &&
