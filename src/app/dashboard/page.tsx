@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import Site from "@/ui/site";
 import {
+    ArrowLeftRightIcon,
     CheckIcon,
     ChevronsUpDownIcon,
     LoaderIcon,
@@ -167,7 +168,7 @@ const useSite = create<SiteState>((set) => ({
                       ...state.site,
                       links: state.site.links
                           ? state.site.links.map((l) =>
-                                l.id === link.id ? link : l
+                                l.id === link.id ? link : l,
                             )
                           : [],
                   }
@@ -219,23 +220,46 @@ export default function DashboardPage() {
 function DashboardContent() {
     const site = useSite((state) => state.site);
 
+    const [tab, setTab] = useState<"editor" | "preview">("editor");
+
     return (
-        <Layout>
-            <div className="relative w-screen max-w-sm">
-                <Editor />
-            </div>
-            <div className="relative w-screen max-w-sm">
-                <Site site={site!} />
-            </div>
-            <ChangeSaver />
-        </Layout>
+        <>
+            <Layout>
+                <div
+                    className={cn(
+                        "relative md:w-screen md:max-w-sm",
+                        tab === "editor" ? "" : "hidden md:block",
+                    )}
+                >
+                    <Editor />
+                </div>
+                <div
+                    className={cn(
+                        "relative md:w-screen md:max-w-sm flex flex-col flex-1",
+                        tab === "preview" ? "" : "hidden md:block",
+                    )}
+                >
+                    <Site site={site!} />
+                </div>
+                <ChangeSaver />
+            </Layout>
+            <EditorFieldButton
+                onClick={() => setTab(tab === "editor" ? "preview" : "editor")}
+                className="md:hidden fixed bottom-8 right-8"
+            >
+                <ArrowLeftRightIcon />
+                Switch Tab
+            </EditorFieldButton>
+        </>
     );
 }
 
 function Layout({ children }: { children?: ReactNode }) {
     return (
-        <div className="py-16 px-4 flex flex-col items-center">
-            <div className="grid grid-cols-2 gap-16">{children}</div>
+        <div className="py-16 px-4 flex flex-col items-center min-h-screen relative">
+            <div className="flex flex-col md:grid md:grid-cols-2 md:gap-16 relative flex-1">
+                {children}
+            </div>
         </div>
     );
 }
@@ -428,7 +452,7 @@ function KinksField() {
                             ?.filter((value) =>
                                 value.name
                                     .toLowerCase()
-                                    .includes(query.toLowerCase())
+                                    .includes(query.toLowerCase()),
                             )
                             .slice(0, 5)
                             .map((kink) => (
@@ -457,7 +481,7 @@ function KinkResult({ kink }: { kink: Kink }) {
                 "h-8 text-sm flex flex-row items-center -mx-4 px-4 gap-2 select-none cursor-pointer group",
                 siteKinks.find((k) => k.id === kink.id)
                     ? "opacity-50 hover:opacity-75"
-                    : "hover:bg-pink-100"
+                    : "hover:bg-pink-100",
             )}
             onClick={() => {
                 if (siteKinks.find((k) => k.id === kink.id)) {
@@ -509,7 +533,7 @@ function KinkItem({ kink }: { kink: Kink }) {
 
                                 <StarIcon className="size-4" />
                             </div>
-                        )
+                        ),
                     )}
                 </div>
             </button>
@@ -722,7 +746,7 @@ function EditorFieldInput({
                 "has-[textarea:focus]:ring-pink-500 has-[input:focus]:border-pink-500",
                 "has-[textarea:focus]:border-pink-500 bg-white min-h-8 flex flex-row",
                 "items-center px-4 text-sm leading-none transition-all",
-                className
+                className,
             )}
             {...props}
         >
@@ -793,7 +817,7 @@ function EditorFieldButtons({
         <div
             className={cn(
                 "flex flex-row items-center gap-2 flex-wrap",
-                className
+                className,
             )}
             {...props}
         >
@@ -819,8 +843,8 @@ function EditorFieldButton({
     return (
         <button
             className={cn(
-                "text-sm [&>svg]:size-4 flex flex-row items-center gap-2 min-h-8",
-                "transition-colors rounded-lg cursor-pointer border disabled:opacity-50",
+                "text-sm [&>svg]:size-4 flex flex-row items-center justify-center gap-2 h-8 min-h-8",
+                "transition-colors rounded-lg cursor-pointer border disabled:opacity-50 whitespace-nowrap",
                 "disabled:cursor-not-allowed",
                 variant === "primary" &&
                     "bg-pink-900 hover:bg-pink-800 border-pink-900 text-background disabled:hover:bg-pink-900",
@@ -831,7 +855,8 @@ function EditorFieldButton({
                 size === "icon" && "min-w-8 justify-center px-0",
                 size === "default" && "px-4",
                 size === "icon" &&
-                    "size-8 min-w-8 flex items-center justify-center"
+                    "size-8 min-w-8 flex items-center justify-center",
+                className,
             )}
             {...props}
         >
@@ -900,7 +925,7 @@ function PictureInput({
                                 "Failed to upload " +
                                     resource.toLowerCase() +
                                     ": " +
-                                    (e as Error).message
+                                    (e as Error).message,
                             );
                         } finally {
                             setIsLoading(false);
@@ -939,14 +964,14 @@ function ChangeSaver() {
     return (
         <div
             className={cn(
-                "col-span-2 h-12 px-4 -mx-4 bg-white rounded-xl border border-pink-200",
-                "shadow shadow-pink-200 sticky bottom-8 flex flex-row items-center",
+                "col-span-2 py-4 md:h-12 px-4 md:-mx-4 mt-16 md:mt-0 bg-white rounded-xl border border-pink-200",
+                "shadow shadow-pink-200 sticky bottom-20 md:bottom-8 flex flex-col md:flex-row items-stretch md:items-center",
                 "justify-between gap-4 transition-all",
                 !isChanged &&
-                    "opacity-0 pointer-events-none -mb-12 translate-y-5"
+                    "opacity-0 pointer-events-none -mb-12 translate-y-5 mt-0",
             )}
         >
-            <div className="text-sm font-semibold">
+            <div className="text-sm font-semibold text-center md:text-left">
                 You have unsaved changes. Save them to publish.
             </div>
             <div className="flex flex-row gap-2">
@@ -957,11 +982,13 @@ function ChangeSaver() {
                         setSite(original!);
                         setIsChanged(false);
                     }}
+                    className="flex-1"
                 >
                     <UndoIcon /> Undo Changes
                 </EditorFieldButton>
                 <EditorFieldButton
                     disabled={isSaving}
+                    className="flex-1"
                     onClick={async () => {
                         setIsSaving(true);
 
@@ -973,7 +1000,7 @@ function ChangeSaver() {
                         } catch (e) {
                             alert(
                                 "Failed to save changes: " +
-                                    (e as Error).message
+                                    (e as Error).message,
                             );
                         } finally {
                             setIsSaving(false);
