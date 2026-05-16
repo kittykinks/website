@@ -419,8 +419,8 @@ function KinksField() {
           Your kinks to show on your link in bio site.
         </EditorFieldDescription>
       </EditorFieldHeader>
-      <EditorFieldInput className="flex-col items-stretch overflow-hidden">
-        <div className="flex flex-row items-center gap-2 h-8">
+      <EditorFieldInput className="flex-col items-stretch overflow-x-hidden overflow-y-auto max-h-64 relative">
+        <div className="flex flex-row items-center gap-2 h-8 sticky top-0">
           <EditorFieldInputIcon>
             <SearchIcon />
           </EditorFieldInputIcon>
@@ -435,7 +435,7 @@ function KinksField() {
             <LoaderIcon className="size-4 animate-spin" />
           </div>
         ) : (
-          <div className="flex flex-col items-stretch overflow-y-auto max-h-48">
+          <div className="flex flex-col items-stretch">
             {kinks
               ?.filter((value) =>
                 value.name.toLowerCase().includes(query.toLowerCase()),
