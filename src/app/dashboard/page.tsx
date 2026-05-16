@@ -420,7 +420,7 @@ function KinksField() {
         </EditorFieldDescription>
       </EditorFieldHeader>
       <EditorFieldInput className="flex-col items-stretch overflow-x-hidden overflow-y-auto max-h-64 relative">
-        <div className="flex flex-row items-center gap-2 h-8 min-h-8 z-20 bg-white sticky top-0">
+        <div className="flex flex-row items-center gap-2 h-8 min-h-8 z-20 bg-white sticky top-0 -mx-4 px-4">
           <EditorFieldInputIcon>
             <SearchIcon />
           </EditorFieldInputIcon>
